@@ -1,7 +1,10 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>SMB2 Runz</title>
 
@@ -9,63 +12,111 @@
 
 body{
     background:#c0c0c0;
-    font-family:Tahoma;
+    font-family:Tahoma, Arial, sans-serif;
     margin:20px;
     color:black;
+}
+
+.wrapper{
+    max-width:1100px;
+    margin:auto;
+}
+
+.header{
+    background:white;
+    border:2px solid black;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+h1{
+    margin:0;
+    font-size:42px;
+}
+
+.subtitle{
+    margin-top:5px;
+    color:#333;
+    font-size:15px;
+}
+
+.topButtons{
+    margin-top:15px;
+}
+
+.infoButton{
+    background:#dcdcdc;
+    border:2px outset white;
+    padding:6px 14px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.infoButton:active{
+    border:2px inset white;
+}
+
+.controls{
+    background:white;
+    border:2px solid black;
+    padding:15px;
+    margin-bottom:20px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    align-items:center;
+}
+
+select,
+input{
+    padding:8px;
+    font-size:14px;
+    border:1px solid black;
+}
+
+input{
+    flex:1;
+    min-width:250px;
+}
+
+.board{
+    background:white;
+    border:2px solid black;
+    margin-bottom:25px;
+    overflow-x:auto;
+}
+
+.boardTitle{
+    background:navy;
+    color:white;
+    padding:10px;
+    font-size:20px;
+    font-weight:bold;
+    text-transform:capitalize;
 }
 
 table{
     width:100%;
     border-collapse:collapse;
-    background:white;
-    border:2px solid black;
 }
 
 th{
-    background:navy;
-    color:white;
-    padding:8px;
+    background:#e6e6e6;
+    padding:10px;
     border:1px solid black;
-    font-size:14px;
+    text-align:left;
 }
 
 td{
-    padding:8px;
+    padding:10px;
     border:1px solid black;
-    font-size:14px;
-}
-
-h1{
-    font-size:42px;
-    margin-bottom:0px;
-}
-
-.subtitle{
-    margin-bottom:20px;
-    color:#333333;
-}
-
-.controls{
-    margin-bottom:20px;
-}
-
-select{
-    padding:5px;
-    font-size:14px;
-}
-
-input{
-    padding:5px;
-    font-size:14px;
-    width:250px;
 }
 
 .watchButton{
     background:#dcdcdc;
     border:2px outset white;
-    padding:4px 10px;
+    padding:6px 14px;
     cursor:pointer;
-    margin-left:25px;
     font-weight:bold;
 }
 
@@ -73,64 +124,84 @@ input{
     border:2px inset white;
 }
 
-.gold{
-    color:#b8860b;
-    font-weight:bold;
-}
-
-.silver{
-    color:gray;
-    font-weight:bold;
-}
-
-.bronze{
-    color:#8b4513;
-    font-weight:bold;
+.noRuns{
+    padding:15px;
+    font-style:italic;
 }
 
 .footer{
-    margin-top:20px;
+    margin-top:25px;
+    text-align:center;
     font-size:12px;
-    color:#333333;
+    color:#333;
+}
+
+@media (max-width:700px){
+
+    h1{
+        font-size:32px;
+    }
+
+    th,
+    td{
+        font-size:13px;
+    }
+
 }
 
 </style>
-<button
-onclick="window.open('https://youtube.com')">
-info
-</button>
+
 </head>
 
 <body>
 
-<h1>SMB2 Runz</h1>
+<div class="wrapper">
 
-<div class="subtitle">
-Super Monkey Ball 2 Speedrun Leaderboards
-</div>
+    <div class="header">
 
-<div class="controls">
+        <h1>SMB2 Runz</h1>
 
-<select id="categorySelect">
+        <div class="subtitle">
+            Super Monkey Ball 2 Speedrun Leaderboards
+        </div>
 
-<option value="All">All Categories</option>
+        <div class="topButtons">
 
-</select>
+            <button
+            class="infoButton"
+            onclick="window.open('https://youtube.com')">
 
-&nbsp;&nbsp;
+            INFO
 
-<input
-type="text"
-id="searchBox"
-placeholder="Search players or levels"
->
+            </button>
 
-</div>
+        </div>
 
-<div id="leaderboardArea"></div>
+    </div>
 
-<div class="footer">
-SMB2 RUNZ
+    <div class="controls">
+
+        <select id="categorySelect">
+
+            <option value="All">
+                All Categories
+            </option>
+
+        </select>
+
+        <input
+        type="text"
+        id="searchBox"
+        placeholder="Search players or levels">
+
+    </div>
+
+    <div id="leaderboardArea"></div>
+
+    <div class="footer">
+        SMB2 RUNZ
+    </div>
+
 </div>
 
 <script>
@@ -146,7 +217,7 @@ var leaderboardData = [
             player:"Epick",
             level:"1-8 Sliders",
             time:"51:10",
-            video:"https://medal.tv/games/dolphin-emulator/clips/mGK0hxfya29Iqn0bB?invite=cr-MSw4a2YsNjA3NDcwOTA3&v=12"
+            video:"https://youtu.be/dNOhjibRY8w"
         },
 
         {
@@ -158,18 +229,19 @@ var leaderboardData = [
 
     ]
 }
+
 ];
 
 /*
-=========================================
-LOAD DROPDOWN
-=========================================
+========================
+LOAD CATEGORY DROPDOWN
+========================
 */
 
 var categorySelect =
 document.getElementById("categorySelect");
 
-for(var i=0;i<leaderboardData.length;i++){
+for(var i = 0; i < leaderboardData.length; i++){
 
     var option =
     document.createElement("option");
@@ -177,16 +249,17 @@ for(var i=0;i<leaderboardData.length;i++){
     option.value =
     leaderboardData[i].category;
 
-    option.innerHTML =
+    option.textContent =
     leaderboardData[i].category;
 
     categorySelect.appendChild(option);
+
 }
 
 /*
-=========================================
+========================
 RENDER LEADERBOARDS
-=========================================
+========================
 */
 
 function renderBoards(){
@@ -205,7 +278,9 @@ function renderBoards(){
     .value
     .toLowerCase();
 
-    for(var i=0;i<leaderboardData.length;i++){
+    var anythingVisible = false;
+
+    for(var i = 0; i < leaderboardData.length; i++){
 
         var board = leaderboardData[i];
 
@@ -219,24 +294,26 @@ function renderBoards(){
 
         var html = "";
 
-        html += "<h2>";
-        html += board.category;
-        html += "</h2>";
-
-        html += "<table>";
-
         html += `
-        <tr>
-            <th>Player</th>
-            <th>Level</th>
-            <th width="150">Time</th>
-            <th width="180">Video</th>
-        </tr>
+        <div class="board">
+
+            <div class="boardTitle">
+                ${board.category}
+            </div>
+
+            <table>
+
+                <tr>
+                    <th>Player</th>
+                    <th>Level</th>
+                    <th width="140">Time</th>
+                    <th width="180">Video</th>
+                </tr>
         `;
 
         var visibleRuns = 0;
 
-        for(var j=0;j<board.runs.length;j++){
+        for(var j = 0; j < board.runs.length; j++){
 
             var run = board.runs[j];
 
@@ -253,72 +330,78 @@ function renderBoards(){
             }
 
             visibleRuns++;
-
-            var rankClass = "";
-
-            if(visibleRuns == 1){
-                rankClass = "gold";
-            }
-
-            else if(visibleRuns == 2){
-                rankClass = "silver";
-            }
-
-            else if(visibleRuns == 3){
-                rankClass = "bronze";
-            }
-
-            html += "<tr>";
+            anythingVisible = true;
 
             html += `
-            <td class="${rankClass}">
-                #${visibleRuns}
-            </td>
+            <tr>
+
+                <td>${run.player}</td>
+
+                <td>${run.level}</td>
+
+                <td>${run.time}</td>
+
+                <td>
+
+                    <button
+                    class="watchButton"
+                    onclick="window.open('${run.video}')">
+
+                    WATCH
+
+                    </button>
+
+                </td>
+
+            </tr>
             `;
+        }
 
-            html += "<td>";
-            html += run.player;
-            html += "</td>";
-
-            html += "<td>";
-            html += run.level;
-            html += "</td>";
-
-            html += "<td>";
-            html += run.time;
-            html += "</td>";
+        if(visibleRuns == 0){
 
             html += `
-            <td>
+            <tr>
 
-                <button
-                class="watchButton"
-                onclick="window.open('${run.video}')">
+                <td
+                colspan="4"
+                class="noRuns">
 
-                WATCH
+                No runs found.
 
-                </button>
+                </td>
 
-            </td>
+            </tr>
             `;
-
-            html += "</tr>";
         }
 
-        html += "</table><br>";
+        html += `
+            </table>
+        </div>
+        `;
 
-        if(visibleRuns > 0){
-            container.innerHTML += html;
-        }
+        container.innerHTML += html;
 
+    }
+
+    if(!anythingVisible){
+
+        container.innerHTML = `
+        <div class="board">
+
+            <div class="noRuns">
+                No matching runs found.
+            </div>
+
+        </div>
+        `;
     }
 
 }
 
 /*
-=========================================
+========================
 EVENTS
-=========================================
+========================
 */
 
 categorySelect.onchange =
@@ -330,9 +413,9 @@ document
 renderBoards;
 
 /*
-=========================================
+========================
 START WEBSITE
-=========================================
+========================
 */
 
 renderBoards();
