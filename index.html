@@ -1,0 +1,351 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+
+<head>
+
+<title>SMB2 Runz</title>
+
+<style>
+
+body{
+    background:#c0c0c0;
+    font-family:Tahoma;
+    margin:20px;
+    color:black;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:white;
+    border:2px solid black;
+}
+
+th{
+    background:navy;
+    color:white;
+    padding:8px;
+    border:1px solid black;
+    font-size:14px;
+}
+
+td{
+    padding:8px;
+    border:1px solid black;
+    font-size:14px;
+}
+
+h1{
+    font-size:42px;
+    margin-bottom:0px;
+}
+
+.subtitle{
+    margin-bottom:20px;
+    color:#333333;
+}
+
+.controls{
+    margin-bottom:20px;
+}
+
+select{
+    padding:5px;
+    font-size:14px;
+}
+
+input{
+    padding:5px;
+    font-size:14px;
+    width:250px;
+}
+
+.watchButton{
+    background:#dcdcdc;
+    border:2px outset white;
+    padding:4px 10px;
+    cursor:pointer;
+    margin-left:25px;
+    font-weight:bold;
+}
+
+.watchButton:active{
+    border:2px inset white;
+}
+
+.gold{
+    color:#b8860b;
+    font-weight:bold;
+}
+
+.silver{
+    color:gray;
+    font-weight:bold;
+}
+
+.bronze{
+    color:#8b4513;
+    font-weight:bold;
+}
+
+.footer{
+    margin-top:20px;
+    font-size:12px;
+    color:#333333;
+}
+
+</style>
+<button
+onclick="window.open('https://youtube.com')">
+info
+</button>
+</head>
+
+<body>
+
+<h1>SMB2 Runz</h1>
+
+<div class="subtitle">
+Super Monkey Ball 2 Speedrun Leaderboards
+</div>
+
+<div class="controls">
+
+<select id="categorySelect">
+
+<option value="All">All Categories</option>
+
+</select>
+
+&nbsp;&nbsp;
+
+<input
+type="text"
+id="searchBox"
+placeholder="Search players or levels"
+>
+
+</div>
+
+<div id="leaderboardArea"></div>
+
+<div class="footer">
+SMB2 RUNZ
+</div>
+
+<script>
+
+/*
+=========================================
+ADD CATEGORIES AND RUNS HERE
+=========================================
+*/
+
+var leaderboardData = [
+
+{
+    category:"expert",
+
+    runs:[
+
+        {
+            player:"Epick",
+            level:"1-8 Sliders",
+            time:"51:10",
+            video:"https://medal.tv/games/dolphin-emulator/clips/mGK0hxfya29Iqn0bB?invite=cr-MSw4a2YsNjA3NDcwOTA3&v=12"
+        },
+
+        {
+            player:"SpinDash",
+            level:"Diamonds",
+            time:"00:05.42",
+            video:"https://youtube.com/"
+        }
+
+    ]
+}
+];
+
+/*
+=========================================
+LOAD DROPDOWN
+=========================================
+*/
+
+var categorySelect =
+document.getElementById("categorySelect");
+
+for(var i=0;i<leaderboardData.length;i++){
+
+    var option =
+    document.createElement("option");
+
+    option.value =
+    leaderboardData[i].category;
+
+    option.innerHTML =
+    leaderboardData[i].category;
+
+    categorySelect.appendChild(option);
+}
+
+/*
+=========================================
+RENDER LEADERBOARDS
+=========================================
+*/
+
+function renderBoards(){
+
+    var container =
+    document.getElementById("leaderboardArea");
+
+    container.innerHTML = "";
+
+    var selectedCategory =
+    categorySelect.value;
+
+    var searchText =
+    document
+    .getElementById("searchBox")
+    .value
+    .toLowerCase();
+
+    for(var i=0;i<leaderboardData.length;i++){
+
+        var board = leaderboardData[i];
+
+        if(
+            selectedCategory != "All"
+            &&
+            board.category != selectedCategory
+        ){
+            continue;
+        }
+
+        var html = "";
+
+        html += "<h2>";
+        html += board.category;
+        html += "</h2>";
+
+        html += "<table>";
+
+        html += `
+        <tr>
+            <th width="80">Rank</th>
+            <th>Player</th>
+            <th>Level</th>
+            <th width="150">Time</th>
+            <th width="180">Video</th>
+        </tr>
+        `;
+
+        var visibleRuns = 0;
+
+        for(var j=0;j<board.runs.length;j++){
+
+            var run = board.runs[j];
+
+            var combinedText =
+            (
+                run.player + " " + run.level
+            ).toLowerCase();
+
+            if(
+                combinedText.indexOf(searchText)
+                == -1
+            ){
+                continue;
+            }
+
+            visibleRuns++;
+
+            var rankClass = "";
+
+            if(visibleRuns == 1){
+                rankClass = "gold";
+            }
+
+            else if(visibleRuns == 2){
+                rankClass = "silver";
+            }
+
+            else if(visibleRuns == 3){
+                rankClass = "bronze";
+            }
+
+            html += "<tr>";
+
+            html += `
+            <td class="${rankClass}">
+                #${visibleRuns}
+            </td>
+            `;
+
+            html += "<td>";
+            html += run.player;
+            html += "</td>";
+
+            html += "<td>";
+            html += run.level;
+            html += "</td>";
+
+            html += "<td>";
+            html += run.time;
+            html += "</td>";
+
+            html += `
+            <td>
+
+                <button
+                class="watchButton"
+                onclick="window.open('${run.video}')">
+
+                WATCH
+
+                </button>
+
+            </td>
+            `;
+
+            html += "</tr>";
+        }
+
+        html += "</table><br>";
+
+        if(visibleRuns > 0){
+            container.innerHTML += html;
+        }
+
+    }
+
+}
+
+/*
+=========================================
+EVENTS
+=========================================
+*/
+
+categorySelect.onchange =
+renderBoards;
+
+document
+.getElementById("searchBox")
+.onkeyup =
+renderBoards;
+
+/*
+=========================================
+START WEBSITE
+=========================================
+*/
+
+renderBoards();
+
+</script>
+
+</body>
+
+</html>
